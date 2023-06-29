@@ -1,13 +1,12 @@
+import tkinter as tk
 import matplotlib.pyplot as plt
 
-def visualize_data(x_labels, data_values):
-    # Adjust the figure size
-    plt.figure(figsize=(8, 6))
 
+def visualize_data(x_labels, data_values):
     # Create a bar chart using Matplotlib
     colors = ['red', 'green', 'blue']  # Custom colors for bars
     bars = plt.bar(x_labels, data_values, color=colors)
-    
+
     # Add data labels
     for bar in bars:
         height = bar.get_height()
@@ -22,14 +21,42 @@ def visualize_data(x_labels, data_values):
     # Add a legend
     plt.legend(bars, x_labels)
 
-    # Save the chart as an image file
-    plt.savefig('bar_chart.png')
-
     # Display the chart
     plt.show()
 
-# Example usage
-categories = ['Category A', 'Category B', 'Category C']
-values = [10, 15, 5]
 
-visualize_data(categories, values)
+def on_submit():
+    # Retrieve input values from the entry widgets
+    categories = entry_categories.get()
+    values = entry_values.get()
+
+    # Convert input values to lists
+    categories = categories.split(',')
+    values = list(map(int, values.split(',')))
+
+    # Call the visualize_data function with the provided input
+    visualize_data(categories, values)
+
+
+# Create the GUI window
+window = tk.Tk()
+window.title("Data Visualization")
+window.geometry("400x200")
+
+# Create labels and entry widgets for input
+label_categories = tk.Label(window, text="Categories:")
+label_categories.pack()
+entry_categories = tk.Entry(window)
+entry_categories.pack()
+
+label_values = tk.Label(window, text="Values:")
+label_values.pack()
+entry_values = tk.Entry(window)
+entry_values.pack()
+
+# Create a submit button
+submit_button = tk.Button(window, text="Visualize", command=on_submit)
+submit_button.pack()
+
+# Start the GUI event loop
+window.mainloop()
